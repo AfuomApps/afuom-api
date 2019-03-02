@@ -24,5 +24,4 @@ urlpatterns = [
     path('api/', include('api.urls')),
     path('website/', include('website.urls')),
     url(r'^$', welcome_page, name='website_welcome_page'),
-
 ]
