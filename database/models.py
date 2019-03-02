@@ -9,4 +9,4 @@ class Crop(models.Model):
     """
     name = models.CharField(max_length=SHORT_LENGTH)
     description = models.TextField(max_length=LONG_LENGTH, blank=True)
-    file = models.FileField(upload_to='/crops/')
+    file = models.FileField(upload_to='crops/')
