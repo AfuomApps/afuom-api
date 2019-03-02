@@ -1,2 +1,10 @@
 credentials/**
 .DS_Store
+api/migrations/**
+database/migrations/**
+website/migrations/**
+
+afuom/__pychache__/**
+database/__pychache__/**
+website/__pychache__/**
+api/__pychache__/**
