@@ -5,8 +5,7 @@ LONG_LENGTH = 100
 
 
 class Crop(models.Model):
-    """
-        This will represent each crop
+    """This will represent each crop
     """
     name = models.CharField(max_length=SHORT_LENGTH)
     description = models.TextField(max_length=LONG_LENGTH, blank=True)
