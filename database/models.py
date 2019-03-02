@@ -45,23 +45,11 @@ class Crop(models.Model):
 
     crop_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=SHORT_LENGTH)
-    start_month = models.IntegerField()
-    end_month = models.IntegerField()
+    start_month = JSONField()
+    end_month = JSONField()
     family_id = models.ForeignKey(
         CropFamily, blank=True, null=True, on_delete=models.SET_NULL)
 
-
-class Month(models.Model):
-
-    """
-    This table stores all the months in a year
-    """
-
-    month_id_pk = models.AutoField(primary_key=True)
-    crop_id_fk = models.ForeignKey(
-        Crop, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=SHORT_LENGTH)
-    month_number = models.IntegerField()
 
 
 class Disease(models.Model):
