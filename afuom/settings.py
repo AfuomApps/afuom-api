@@ -126,8 +126,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 
-
 # Simplified static file serving.
+
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+
+DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
+STATICFILES_STORAGE = 'custom_storages.custom_azure.PublicAzureStorage'
