@@ -129,3 +129,4 @@ MEDIA_URL = '/media/'
 # Simplified static file serving.
 STATICFILES_LOCATION = 'static'
 MEDIAFILES_LOCATION = 'media'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
