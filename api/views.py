@@ -71,6 +71,7 @@ def post_registration(request):
     )
 
     new_farm.save()
+    # create firebase hook
 
     serialized_data = json.loads(
         serializers.serialize('json', [new_farm]))[0]["fields"]
@@ -82,7 +83,6 @@ def post_registration(request):
         "area_info": serialized_area_info
     }
 
-    # print(request.POST)
     return JsonResponse(response)
 
 
@@ -100,7 +100,20 @@ def post_alert(request):
     threat_deatials: level, symptoms, treatments, preventions
     threat_level
     """
-    pass
+    new_alert = Alert(
+        farm_name=request.POST.get('name'),
+        threat_level=request.POST.get('bio', ''),
+        catalog_category=request.POST.get('area', ''),
+        specific_threat=request.POST.get('category_id', ''),
+    )
+
+    threat_info = [j["fields"] for j in json.loads(serializers.serialize(
+        'json', Disease.objects.filter(name=new_alert.specific_threat)))]
+    response = {
+        "my_alert_info": new_alert.threat_level,
+        "alert_response": threat_info
+    }
+    return JsonResponse({"data": response})
 
 
 # get disease catalog
@@ -126,3 +139,11 @@ def get_all_crop_families(request):
         'json', Crop.objects.all()))]
 
     return JsonResponse({"data": all_crop_families})
+
+
+def send_alerts():
+    pass
+
+
+# get threats
+# get alerts
