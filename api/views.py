@@ -87,25 +87,36 @@ def post_registration(request):
 
 
 @require_http_methods(["POST"])
+@csrf_exempt
 def post_alert(request):
     """
     req-----
     picture
     crop info
-    threat: whch one? weed, insect, disease?
-    specific_threat: from disease catalog
+    threat_group: whch one? weed, insect, disease?
+    catalog_category: from disease catalog
 
 
     respo -----
     threat_deatials: level, symptoms, treatments, preventions
     threat_level
     """
+    print(request.POST)
+
     new_alert = Alert(
-        farm_name=request.POST.get('name'),
-        threat_level=request.POST.get('bio', ''),
-        catalog_category=request.POST.get('area', ''),
-        specific_threat=request.POST.get('category_id', ''),
+        farm_name=Farm.objects.get(
+            name__icontains=request.POST.get('farm_name', '')),
+        threat_level=ThreatType.objects.get(
+            severity=request.POST.get('threat_level', 'HIGH')),
+        catalog_category=Disease.objects.filter(
+            name=request.POST.get('catalog_category', '')),
+        threat_group=request.POST.get('specific_threat', 'disease'),
+        description=request.POST.get('description', '')
     )
+
+    # print(new_alert)
+    # new_file = Image(name="reportedImageFrom" +
+    #                  new_alert.farm_associated.name, file=request.POST["picture"])
 
     threat_info = [j["fields"] for j in json.loads(serializers.serialize(
         'json', Disease.objects.filter(name=new_alert.specific_threat)))]
@@ -116,11 +127,34 @@ def post_alert(request):
     return JsonResponse({"data": response})
 
 
-# get disease catalog
 @require_http_methods(["GET"])
 def get_all_farms(request):
     all_farms = [j["fields"] for j in json.loads(serializers.serialize(
         'json', Farm.objects.all()))]
+
+    return JsonResponse({"data": all_farms})
+
+
+@require_http_methods(["GET"])
+def get_all_farms_2(request):
+    json_data = json.loads(serializers.serialize(
+        'json', Farm.objects.all()))
+
+    for p in json_data:
+        print(p)
+
+    all_farms = [
+        {
+            "name": j["fields"]["name"],
+            "bio": j["fields"]["bio"],
+            "area": j["fields"]["area"],
+            "longitude": j["fields"]["location"]["longitude"],
+            "latitude": j["fields"]["location"]["latitude"],
+            "crops": j["fields"]["crops_grown"]["crops"],
+            "interested_in_selling": j["fields"]["interested_in_selling"],
+            "contact": j["fields"]["contact"]["phone"]
+        } for j in json_data
+    ]
 
     return JsonResponse({"data": all_farms})
 
