@@ -104,3 +104,25 @@ def post_alert(request):
 
 
 # get disease catalog
+@require_http_methods(["GET"])
+def get_all_farms(request):
+    all_farms = [j["fields"] for j in json.loads(serializers.serialize(
+        'json', Farm.objects.all()))]
+
+    return JsonResponse({"data": all_farms})
+
+
+@require_http_methods(["GET"])
+def get_all_crops(request):
+    all_crops = [j["fields"] for j in json.loads(serializers.serialize(
+        'json', Crop.objects.all()))]
+
+    return JsonResponse({"data": all_crops})
+
+
+@require_http_methods(["GET"])
+def get_all_crop_families(request):
+    all_crop_families = [j["fields"] for j in json.loads(serializers.serialize(
+        'json', Crop.objects.all()))]
+
+    return JsonResponse({"data": all_crop_families})
