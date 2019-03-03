@@ -146,21 +146,24 @@ class Alert(models.Model):
         verbose_name_plural = "Alerts or Posts"
 
 
-class StorageFiles(models.Model):
+class Image(models.Model):
     name = models.CharField(max_length=SHORT_LENGTH, unique=True)
-    disease_associated = models.FileField(
-        upload_to='static/diseases/', blank=True, null=True)
-    alert_associated = models.FileField(
-        upload_to='static/alerts/', blank=True, null=True)
-    crop_associated = models.FileField(
-        upload_to='static/crops/', blank=True, null=True)
-    crop_family_associated = models.FileField(
-        upload_to='static/crop_families/', blank=True, null=True)
-    farm_associated = models.FileField(
-        upload_to='static/farms/', blank=True, null=True)
+    description = models.TextField(max_length=LONG_LENGTH)
+    picture = models.FileField(
+        upload_to='uploads/', blank=True, null=True)
+    disease_associated = models.ForeignKey(
+        Disease, blank=True, null=True, on_delete=models.SET_NULL)
+    alert_associated = models.ForeignKey(
+        Alert, blank=True, null=True, on_delete=models.SET_NULL)
+    crop_associated = models.ForeignKey(
+        Crop, blank=True, null=True, on_delete=models.SET_NULL)
+    crop_family_associated = models.ForeignKey(
+        CropFamily, blank=True, null=True, on_delete=models.SET_NULL)
+    farm_associated = models.ForeignKey(
+        Farm, blank=True, null=True, on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.name
 
     class Meta:
-        verbose_name_plural = "Storage Files"
+        verbose_name_plural = "Images"
