@@ -22,6 +22,12 @@ class Farm(models.Model):
     # json of {person of contact name, phone, email}
     contact = JSONField()
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Farms"
+
 
 class CropFamily(models.Model):
 
@@ -33,6 +39,13 @@ class CropFamily(models.Model):
     family_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=SHORT_LENGTH)
     icon = models.CharField(max_length=LONG_LENGTH)
+    # picture = models.FileField(upload_to='crops/')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Crops"
 
 
 class Crop(models.Model):
@@ -50,6 +63,11 @@ class Crop(models.Model):
     family_id = models.ForeignKey(
         CropFamily, blank=True, null=True, on_delete=models.SET_NULL)
 
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Varieties"
 
 
 class Disease(models.Model):
@@ -64,3 +82,19 @@ class Disease(models.Model):
     symptoms = JSONField()
     crops_affected = JSONField()  # json of {Secondary keys of crops}
     treatment = JSONField()  # json of {organic:, pesticide:}
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name_plural = "Diseases"
+
+# class Alert(models.Model):
+#     """
+
+#     """
+#     name = models.CharField(max_length=SHORT_LENGTH)
+#     farm_associated = models.ForeignKey(Farm)
+#     threa
+# posts
+# alerts
