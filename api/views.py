@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from database.models import *
 from django.views.decorators.csrf import csrf_exempt
 from django.core import serializers
+import json
 
 
 def api_welcome_page(request):
@@ -68,17 +69,21 @@ def post_registration(request):
             request.POST.get('interested_in_selling', True)),
         contact={"phone": request.POST.get('phone')}
     )
-    p = new_farm.save()
-    print(p)
 
-    v = serializers.serialize('json', [new_farm])
-    print(v)
+    new_farm.save()
+
+    serialized_data = json.loads(
+        serializers.serialize('json', [new_farm]))[0]["fields"]
+    serialized_area_info = [j["fields"] for j in json.loads(serializers.serialize(
+        'json', Farm.objects.exclude(name=new_farm.name)))]
+
     response = {
-        "profile": v,
-        "area_info": []
+        "profile": serialized_data,
+        "area_info": serialized_area_info
     }
+
     # print(request.POST)
-    return JsonResponse({"status": "success"})
+    return JsonResponse(response)
 
 
 @require_http_methods(["POST"])
