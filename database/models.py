@@ -149,15 +149,15 @@ class Alert(models.Model):
 class StorageFiles(models.Model):
     name = models.CharField(max_length=SHORT_LENGTH, unique=True)
     disease_associated = models.FileField(
-        upload_to='storagefiles/diseases/', blank=True, null=True)
+        upload_to='static/diseases/', blank=True, null=True)
     alert_associated = models.FileField(
-        upload_to='storagefiles/alerts/', blank=True, null=True)
+        upload_to='static/alerts/', blank=True, null=True)
     crop_associated = models.FileField(
-        upload_to='storagefiles/crops/', blank=True, null=True)
+        upload_to='static/crops/', blank=True, null=True)
     crop_family_associated = models.FileField(
-        upload_to='storagefiles/crop_families/', blank=True, null=True)
+        upload_to='static/crop_families/', blank=True, null=True)
     farm_associated = models.FileField(
-        upload_to='storagefiles/farms/', blank=True, null=True)
+        upload_to='static/farms/', blank=True, null=True)
 
     def __str__(self):
         return self.name

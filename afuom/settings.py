@@ -29,7 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
+AZURE_ACCOUNT_NAME = passport.AZURE_ACCOUNT_NAME
+AZURE_ACCOUNT_KEY = passport.AZURE_ACCOUNT_KEY
+AZURE_CONTAINER = passport.AZURE_ACCOUNT_CONTAINER
 # Application definition
 
 INSTALLED_APPS = [
@@ -79,10 +81,6 @@ WSGI_APPLICATION = 'afuom.wsgi.application'
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    # }
     'default': passport.POSTGRES_DATABASE_DETAILS,
 }
 
